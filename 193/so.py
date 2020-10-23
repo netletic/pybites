@@ -20,19 +20,18 @@ def top_python_questions(url=cached_so_url):
     with requests.Session() as session:
         html = session.get(url).content
     soup = BeautifulSoup(html, "html.parser")
-    q_div = soup.find_all("div", attrs={"class": "question-summary"})
 
-    questions = []
+    questions = soup.select(".question-summary")
+    res = []
 
-    for q in q_div:
-        question = q.find("a", attrs={"class": "question-hyperlink"}).get_text()
-        views = q.find("div", attrs={"class": "views"})["title"]
-        views = int(views.replace(",", "").rstrip(" views"))
-        votes = int(q.find("span", attrs={"class": "vote-count-post"}).get_text())
-        questions.append(Question(question, views, votes))
+    for que in questions:
+        question = que.select_one(".question-hyperlink").get_text()
+        votes = que.select_one(".vote-count-post").get_text()
+        views = que.select_one(".views").get_text().strip()
 
-    return sorted(
-        [(q.question, q.votes) for q in questions if q.views > MIN_VIEWS],
-        key=itemgetter(1),
-        reverse=True,
-    )
+        if "m views" not in views:
+            continue
+
+        res.append((question, int(votes)))
+
+    return sorted(res, key=itemgetter(1), reverse=True)
