@@ -1,15 +1,13 @@
-import inspect
 import csv
-from inspect import isclass
+import inspect
 
 
 def get_classes(mod):
     """Return a list of all classes in module 'mod'"""
     return [
-        name
-        for name, type_ in inspect.getmembers(mod)
-        if isclass(type_)
-        if name[0].isupper()
+        member
+        for member, _ in inspect.getmembers(mod, inspect.isclass)
+        if member[0].isupper()
     ]
 
 
