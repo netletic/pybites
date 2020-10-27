@@ -1,21 +1,32 @@
 from typing import Dict
 
 
-def decompress(string: str, table: Dict[str, str]) -> str:
-    for v in table.values():
-        for char in v.split():
-    for char in string:
-        string = string.replace(char, table.get(char, char))
+def translate(table: dict, string: str) -> str:
+    for original, replacement in table.items():
+        string = string.replace(original, replacement)
     return string
 
 
+def decompress(string: str, table: Dict[str, str]) -> str:
+    if not string:
+        return string
+
+    translated_table = {k: translate(table, v) for k, v in table.items()}
+    return translate(translated_table, string)
+
+
 if __name__ == "__main__":
-    table = {"$": "s", "%": "y", "/": "t"}
-    print(decompress("P%Bi/e$", table))
-    table = {'*': 'c',
-
-             '#': '00',
-
-             '$': '*y',
-
-             }
+    table = {
+        "#": "hem",
+        "@": "T#",
+        "$": "t#",
+        "&": "$ as",
+        "*": " do ",
+        "%": " to",
+        "^": " someone ",
+        "~": "for ",
+        "+": "~&",
+    }
+    print(
+        decompress("@ as can*has%*+ can't. And^has% speak up + has no voices.", table)
+    )
