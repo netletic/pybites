@@ -11,8 +11,10 @@ def decompress(string: str, table: Dict[str, str]) -> str:
     if not string:
         return string
 
-    translated_table = {k: translate(table, v) for k, v in table.items()}
-    return translate(translated_table, string)
+    while any([key in str(table.values()) for key in table.keys()]):
+        table = {k: translate(table, v) for k, v in table.items()}
+
+    return translate(table, string)
 
 
 if __name__ == "__main__":
