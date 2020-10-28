@@ -1,20 +1,15 @@
 from typing import Dict
 
 
-def translate(table: dict, string: str) -> str:
-    for original, replacement in table.items():
-        string = string.replace(original, replacement)
-    return string
-
-
 def decompress(string: str, table: Dict[str, str]) -> str:
     if not string:
         return string
 
-    while any([key in str(table.values()) for key in table.keys()]):
-        table = {k: translate(table, v) for k, v in table.items()}
+    trans_table = str.maketrans(table)
 
-    return translate(table, string)
+    while set(table) & set(string):
+        string = string.translate(trans_table)
+    return string
 
 
 if __name__ == "__main__":
