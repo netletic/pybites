@@ -2,17 +2,12 @@ from typing import List
 
 
 def sum_indices(items: List[str]) -> int:
-    values = []
-    seen = {}
-    for i, string in enumerate(items):
-        if string not in seen:
-            value = i
-            seen[string] = i
-        else:
-            value = seen.get(string) + i
-            seen[string] = value
-        values.append(value)
-    return sum(values)
+    seen, total = {}, 0
+
+    for idx, char in enumerate(items):
+        seen[char] = idx + seen.get(char, 0)
+        total += seen.get(char)
+    return total
 
 
 if __name__ == "__main__":
