@@ -7,6 +7,7 @@ def sum_indices(items: List[str]) -> int:
     for idx, char in enumerate(items):
         seen[char] = idx + seen.get(char, 0)
         total += seen.get(char)
+
     return total
 
 
