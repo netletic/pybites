@@ -23,3 +23,7 @@ def dict2nt(dict_):
 def nt2json(nt):
     nt = nt._replace(started=str(nt.started))
     return json.dumps(nt._asdict())
+
+
+if __name__ == "__main__":
+    pass
