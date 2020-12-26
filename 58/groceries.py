@@ -88,8 +88,7 @@ def create_parser():
         "-l",
         "--list",
         help="show items in cart",
-        const="list",
-        action="store_const",
+        action="store_true",
         required=False,
     )
     group.add_argument(
@@ -111,9 +110,6 @@ def handle_args(args=None, cart=None):
     else:
         if cart is None:
             cart = Groceries()
-
-        if args.list == "list" and args.delete:
-            parser.error("exitplx")
 
         if args.list:
             cart.show()
