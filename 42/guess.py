@@ -41,8 +41,11 @@ class Game:
 
         if number < START or number > END:
             raise ValueError("Number not in range")
-        # if number in self._guesses:
-        #     raise ValueError("Already guessed")
+
+        if number in self._guesses:
+            raise ValueError("Already guessed")
+
+        self._guesses.add(number)
 
         return number
 
@@ -66,17 +69,12 @@ class Game:
         while len(self._guesses) < MAX_GUESSES:
             try:
                 number = self.guess()
-                len_guesses = len(self._guesses)
-                self._guesses.add(number)
-                if len_guesses == len(self._guesses):
-                    raise ValueError
-                    raise ValueError("Already guessed")
                 if self._validate_guess(number):
                     self._win = True
                     break
             except ValueError as ve:
                 print(ve)
-                continue
+
         if self._win:
             print(f"It took you {len(self._guesses)} guesses")
         else:
