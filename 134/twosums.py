@@ -1,4 +1,5 @@
-from itertools import product
+from itertools import combinations
+from pprint import pprint
 
 
 def two_sums(numbers, target):
@@ -9,7 +10,7 @@ def two_sums(numbers, target):
     :return: tuple - (index1, index2) or None
     """
     sorted_numbers = sorted(numbers)
-    pairs = product(sorted_numbers, sorted_numbers)
+    pairs = combinations(sorted_numbers, 2)
     for n1, n2 in pairs:
         if n1 + n2 == target:
             return numbers.index(n1), numbers.index(n2)
