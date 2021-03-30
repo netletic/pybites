@@ -1,11 +1,12 @@
 from datetime import date
 from typing import List
+from typing import Set
 
 from dateutil.rrule import DAILY
 from dateutil.rrule import rrule
 
 
-def get_missing_dates(dates: List[date]):
+def get_missing_dates(dates: List[date]) -> Set[date]:
     """Receives a range of dates and returns a sequence
     of missing datetime.date objects (no worries about order).
 
