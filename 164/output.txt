@@ -1,0 +1,5 @@
+<a href="https://codechalleng.es/bites/>Bites of Py</a>
+<a href="https://stackoverflow.com/a/12927564 target="_blank">How to capture subprocess.call stdout</a>
+<a href="https://pybit.es/>Our labor of love</a>
+<a href="https://pybit.es/pages/about.html>About Us</a>
+<a href="https://nu.nl target="_blank">Dutch news site</a>

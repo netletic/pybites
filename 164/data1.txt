@@ -1,0 +1,4 @@
+https://www.python.org, Python Homepage
+bad data,blabla,123
+https://pybit.es/generators.html , Generators are Awesome
+more bad data

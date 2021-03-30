@@ -1,0 +1,6 @@
+bogus data, again
+https://codechalleng.es/bites/ , Bites of Py
+https://stackoverflow.com/a/12927564,How to capture subprocess.call stdout
+https://pybit.es/,Our labor of love
+https://pybit.es/pages/about.html, About Us
+https://nu.nl, Dutch news site
