@@ -16,4 +16,5 @@ def get_missing_dates(dates: List[date]):
     """
     start, end = min(dates), max(dates)
     all_dates = {dt.date() for dt in rrule(freq=DAILY, dtstart=start, until=end)}
-    return all_dates.difference(dates)
+    missing_dates = all_dates.difference(dates)
+    return missing_dates
