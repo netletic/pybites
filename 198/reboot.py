@@ -43,7 +43,7 @@ def calculate_diff(tstamps: List[datetime]) -> List[Uptime]:
     return uptimes
 
 
-def calc_max_uptime(reboots: str):
+def calc_max_uptime(reboots: str) -> Tuple[int, str]:
     """Parse the passed in reboots output,
     extracting the datetimes.
 
@@ -56,8 +56,8 @@ def calc_max_uptime(reboots: str):
     For the output above it would be (30, '2019-02-17'),
     but we use different outputs in the tests as well ...
     """
-    dates = parse_dates(last_reboot=reboots)
-    longest_uptime = max(calculate_diff(dates))
+    tstamps = parse_dates(last_reboot=reboots)
+    longest_uptime = max(calculate_diff(tstamps))
     return longest_uptime.astuple()
 
 
