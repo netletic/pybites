@@ -7,17 +7,6 @@ from typing import Tuple
 from dateutil.parser import parse
 
 
-MAC1 = """
-reboot    ~                         Wed Apr 10 22:39
-reboot    ~                         Wed Mar 27 16:24
-reboot    ~                         Wed Mar 27 15:01
-reboot    ~                         Sun Mar  3 14:51
-reboot    ~                         Sun Feb 17 11:36
-reboot    ~                         Thu Jan 17 21:54
-reboot    ~                         Mon Jan 14 09:25
-"""
-
-
 @dataclass(order=True)
 class Uptime:
     uptime: int
@@ -59,12 +48,3 @@ def calc_max_uptime(reboots: str):
     dates = parse_dates(last_reboot=reboots)
     longest_uptime = max(calculate_diff(dates))
     return longest_uptime.astuple()
-
-
-def main() -> int:
-    print(calc_max_uptime(reboots=MAC1))
-    return 0
-
-
-if __name__ == "__main__":
-    exit(main())
