@@ -24,5 +24,5 @@ class Domain:
 
     @classmethod
     def parse_email(cls, email: str):
-        _, _, domain_portion = email.partition("@")
+        _, _, domain_portion = email.rpartition("@")
         return cls(name=domain_portion)
