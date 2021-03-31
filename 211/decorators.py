@@ -1,13 +1,14 @@
 from functools import wraps
+from typing import Callable
 
 MAX_RETRIES = 3
 
 
 class MaxRetriesException(Exception):
-    """ MaxRestriesException """
+    """ raised when MAX_RETRIES is exceeded """
 
 
-def retry(func):
+def retry(func: Callable) -> Callable:
     """Complete this decorator, make sure
     you print the exception thrown"""
 
