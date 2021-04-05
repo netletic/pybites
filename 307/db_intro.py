@@ -92,6 +92,9 @@ class DB:
         Raises:
             SchemaError: If the given primary key is not part of the schema.
         """
+        if table in self.table_schemas:
+            raise sqlite3.OperationalError(f"table {table} already exists")
+
         if primary_key not in (e[0] for e in schema):
             raise SchemaError("The provided primary key must be part of the schema.")
 
@@ -103,6 +106,7 @@ class DB:
 
         sql = f"CREATE TABLE {table}({columns}, PRIMARY KEY({primary_key}))"
         self.cursor.execute(sql)
+        self.connection.commit()
 
     def delete(self, table: str, target: Tuple[str, Any]):
         """Deletes rows from the table.
@@ -115,6 +119,7 @@ class DB:
                 ("year", 1999). Only supports "=" operator in this bite.
         """
         self.cursor.execute(f"DELETE FROM {table} WHERE {target[0]} = ?", (target[1],))
+        self.connection.commit()
 
     def insert(self, table: str, values: List[Tuple]):
         """Inserts one or multiple new records into the database.
@@ -159,6 +164,7 @@ class DB:
                     )
         placeholders = ", ".join("?" * col_count)
         self.cursor.executemany(f"INSERT INTO {table} VALUES({placeholders})", values)
+        self.connection.commit()
 
     def select(
         self,
@@ -209,6 +215,7 @@ class DB:
             f"UPDATE {table} SET {new_value[0]} = ? WHERE {target[0]} = ?",
             (new_value[1], target[1]),
         )
+        self.connection.commit()
 
     @property
     def num_transactions(self) -> int:
