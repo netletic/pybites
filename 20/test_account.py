@@ -1,5 +1,5 @@
 import pytest
-from account import Account
+from acc import Account
 
 
 @pytest.fixture()
