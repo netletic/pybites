@@ -1,4 +1,4 @@
-exclude: "^test_"
+exclude: "test_"
 repos:
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.10.0

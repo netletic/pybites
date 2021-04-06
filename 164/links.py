@@ -1,33 +1,26 @@
 import sys
-from urllib.parse import urlparse
-
 
 INTERNAL_LINKS = ("pybit.es", "codechalleng.es")
-
-
-def _fqdn(url: str) -> str:
-    return urlparse(url).netloc
+LINK_HTML = '<a href="{href}"{external}>{name}</a>'
 
 
 def make_html_links():
-    output = []
     for line in sys.stdin:
-        no_http = "http" not in line or "https" not in line
-        if no_http:
+        line = line.strip()
+
+        if "http" not in line:
             continue
+
         try:
-            url, name = line.split(",")
-        except ValueError as ve:
-            print(ve)
+            href, name = line.split(",")
+        except ValueError:
             continue
-        else:
-            url, name = url.strip(), name.strip()
-            external = _fqdn(url) not in INTERNAL_LINKS
-            if external:
-                output.append(f'<a href="{url}" target="_blank">{name}</a>')
-            else:
-                output.append(f'<a href="{url}">{name}</a>')
-    print("\n".join(output))
+
+        external = ' target="_blank"'
+        if any(il in href for il in INTERNAL_LINKS):
+            external = ""
+
+        print(LINK_HTML.format(href=href.strip(), external=external, name=name.strip()))
 
 
 if __name__ == "__main__":
