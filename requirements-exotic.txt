@@ -1,0 +1,11 @@
+bs4
+faker
+# cryptography (use ansible Klayer)
+freezegun
+gender-guesser
+isodate
+nltk
+pytest
+pytest-asyncio
+# pytest-bdd
+# pytest-cov
