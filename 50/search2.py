@@ -1,7 +1,5 @@
 from collections import namedtuple
 from datetime import date
-from time import mktime
-from time import struct_time
 
 import feedparser
 
@@ -10,22 +8,20 @@ FEED = "https://bites-data.s3.us-east-2.amazonaws.com/all.rss.xml"
 Entry = namedtuple("Entry", "date title link tags")
 
 
-def _convert_struct_time_to_dt(stime: struct_time) -> date:
+def _convert_struct_time_to_dt(stime):
     """Convert a time.struct_time as returned by feedparser into a
     datetime.date object, so:
     time.struct_time(tm_year=2016, tm_mon=12, tm_mday=28, ...)
     -> date(2016, 12, 28)
     """
-    epoch = mktime(stime)
-    return date.fromtimestamp(epoch)
+    return date(year=stime.tm_year, month=stime.tm_mon, day=stime.tm_mday)
 
 
-def get_feed_entries(feed: str = FEED):
+def get_feed_entries(feed=FEED):
     """Use feedparser to parse PyBites RSS feed.
     Return a list of Entry namedtuples (date = date, drop time part)
     """
-    feed: feedparser.FeedParserDict = feedparser.parse(feed)
-    for entry in feed["entries"]:
+    for entry in feedparser.parse(feed)["entries"]:
         dt = _convert_struct_time_to_dt(entry.published_parsed)
         yield Entry(
             date=dt,
@@ -48,12 +44,14 @@ def filter_entries_by_tag(search, entry):
     """
     if "&" in search:
         return all(term.strip().lower() in entry.tags for term in search.split("&"))
+
     elif "|" in search:
         return any(term.strip().lower() in entry.tags for term in search.split("|"))
+
     return search.lower() in entry.tags
 
 
-def main() -> int:
+def main():
     """Entry point to the program
     1. Call get_feed_entries and store them in entries
     2. Initiate an infinite loop
@@ -66,6 +64,7 @@ def main() -> int:
        (use entry if only 1 match)
     """
     entries = sorted(get_feed_entries(), key=lambda x: x.date)
+
     while True:
         search = input("\nSearch for (q for exit): ")
 
