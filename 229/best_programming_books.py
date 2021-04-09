@@ -58,7 +58,7 @@ class Book:
         return result
 
 
-def _get_soup(file):
+def _get_soup(file: Path) -> BeautifulSoup:
     return BeautifulSoup(file.read_text(), "html.parser")
 
 
